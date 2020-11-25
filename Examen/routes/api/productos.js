@@ -32,5 +32,13 @@ router.get('/one/:id', (req, res)=>{
 
 });
 
+router.post('/new', (req, res)=>{
+    const {id, name, email, phone, prod, pay, state} = req.body;
+    const id = productosArray.length + 1;
+    productosArray.push({ id, name, email, phone, prod, pay, state });
+    writeToFile();
+    res.status(200).json({ id, name, email, phone, prod, pay, state });
+});
+
 
 module.exports = router;
