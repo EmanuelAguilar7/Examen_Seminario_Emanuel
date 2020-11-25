@@ -40,5 +40,28 @@ router.post('/new', (req, res)=>{
     res.status(200).json({ id, name, email, phone, prod, pay, state });
 });
 
+router.put('/upd/:id', (req, res)=>{
+    let {id} = req.params;
+    id = Number(id);
+    let {state} = req.body;
+    state = Number(state);
 
+
+    let modified = false;
+    let product = null;
+    let newProductosArray = productosArray.map( (o,i)=>{
+    if( o.id === id) {
+        modified = true;
+        o.state = state;
+        product = o;
+    }
+    return o;
+    } );
+    writeToFile();
+    productosArray = newProductosArray;
+
+    res.status(200).json({modified, product});
+});
+
+readFromFile();
 module.exports = router;
